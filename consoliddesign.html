@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<script>
+function includeHTML() {
+  var z, i, elmnt, file, xhttp;
+  /*loop through a collection of all HTML elements:*/
+  z = document.getElementsByTagName("*");
+  for (i = 0; i < z.length; i++) {
+    elmnt = z[i];
+    /*search for elements with a certain atrribute:*/
+    file = elmnt.getAttribute("w3-include-html");
+    if (file) {
+      /*make an HTTP request using the attribute value as the file name:*/
+      xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4) {
+          if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+          if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+          /*remove the attribute, and call this function once more:*/
+          elmnt.removeAttribute("w3-include-html");
+          includeHTML();
+        }
+      }
+      xhttp.open("GET", file, true);
+      xhttp.send();
+      /*exit the function:*/
+      return;
+    }
+  }
+}
+</script>
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>ConsolidDesign</title>
+    <style>
+        .button {
+         background-color: #4CAF50;
+           border: none;
+            color: white;
+          padding: 15px 25px;
+            text-align: center;
+           font-size: 16px;
+           cursor: pointer;}
+        .button:hover {
+             background-color: green; }
+      </style>
+</head>
+<body>
+
+<div w3-include-html="head.html"></div>
+<script>
+includeHTML();
+</script>
+
+
+<div style="min-width: 500px; max-width: 1300px; margin:0 auto">
+    <br>
+    <h1>ConsolidDesign Assistant</h1>
+    <h2 style="font-size: 28px">A CAD Tool to Support Part Consolidation Design for Additive Manufacturing</h2>
+    <br />
+    <form action="static/ConsolidDesign Assistant.rar">
+        <button class="button">Download</button>
+    </form>
+</div>
+
+
+<div style="min-width: 500px; max-width: 1300px; margin:0 auto">
+    <br>
+    <div style="height: 30px"></div>
+    <div style ="float:right; margin: 50px 0px 20px 20px">
+        <iframe width="800" height="450"
+            src="https://www.youtube.com/embed/xYziBUV7LiM"
+            frameborder="0" allowfullscreen>
+        </iframe>
+    </div>
+
+    <p style="font-size: 24px"><b>Project Description </b>:</p>
+    <p style="font-family: Arial ; font-size: 18px; text-align:justify; text-justify:inter-ideograph;">
+        Additive manufacturing (AM) has extremely expanded and refreshed the way how product is designed and made.
+        Part consolidation is one of these new opportunities. Against the conventional philosophy of segmenting
+        a complex design into multiple simple parts and then rejoined with welding or bolts, part consolidation
+        facilitates "complexity for free" mindset and helps designers be focused on "design for function" rather
+        than "design for manufacture and assembly". The main challenges include:   </p>
+
+    <ul style="list-style-type:disc; font-size:18px">
+        <li>Part Consolidation Candidacy Detection (PCCD)</li>
+        <li>Fusion of parts with AM characteristics </li>
+    </ul>
+    <br>
+          <img width="400" src="static/img/Connector.png" alt="Connector" >
+    <div style="height: 5px"></div>
+    <p style="font-size: 24px"><b>Introduction of ConsolidDesign</b></p>
+
+    <p style="font-family: Arial ; font-size: 18px;text-align:justify; text-justify:inter-ideograph;">
+        The ConsolidDesign Assistant is a developed plugin for Rhinoceros in support of part consolidation redesign.
+        The main program is written in C# language. User interface (UI) and data access are derived from the built-in
+        classes and methods from Microsoft .NET framework. Extracted data from the design tool is saved and read by
+        following the Extensible Markup Language (XML) schema. For geometric and material information of the CAD
+        model, it is accessed and manipulated by RhinoCommon.<br>
+        <br>
+        The tool has four modules:<br>
+    <ol style="type:1; font-size:18px;text-align:justify; text-justify:inter-ideograph;">
+        <li> <b>Info setup</b>: This module acquires user inputs including part information such as functions, material,
+            maintenance frequency, and part-part adjacency, interaction strength, and relative motion, etc. The extracted information
+            are saved in an XML file. </li>
+        <li> <b>Screening</b>: This module reloads the xml file generated in "info setup" module, and provides the main function
+            of automatically grouping part candidates with user-defined AM machine constraints. The feasible parts are colored in accordance with the group. <br>
+        <li><b>Embodiment</b>: This module provides a guided design method to instruct designers of how to fusion the sorted parts into
+                designated one piece(s) without assembly interfaces. Within the module, it consists of three main concepts: function interface, function volume, and initial design space. The general idea is to identify
+              the real unchangeable design parameters and modify the rest. <br>
+        <li> <b>Refinement</b>: With the inputs of the initial design space of the embodiment module, design space and non-design space are predefined.
+                Then different optimization techniques can be applied such as lattice or topology optimization.This module is included only to demonstrate
+                  its seamless integration potential with downstream design activities. <br>
+        <br>
+    </ol>
+    </p>
+
+    <p style="font-family: Arial ; font-size: 18px; text-align:justify; text-justify:inter-ideograph;">
+        All related work is reported in the following publications.<br>
+        [1] Yang, S., Tang, Y., & Zhao, Y. F. (2015). A new part consolidation method to embrace the design freedom of additive manufacturing.
+            Journal of Manufacturing Processes, 20, 444-449.
+        <a href="https://www.sciencedirect.com/science/article/pii/S1526612515000699">Download</a><br>
+        [2] Yang, S., Santoro, F., & Zhao, Y. F. (2018). Towards a numerical approach of finding candidates for additive manufacturing-enabled part consolidation.
+            Journal of mechanical design, 140(4), 041701.
+        <a href="https://www.researchgate.net/profile/Sheng_Yang11/publication/322411975_Towards_a_Numerical_Approach_of_Finding_Candidates_for_Additive_Manufacturing-Enabled_Part_Consolidation/links/5ab32e660f7e9b4897c5a48a/Towards-a-Numerical-Approach-of-Finding-Candidates-for-Additive-Manufacturing-Enabled-Part-Consolidation.pdf">Download</a><br>
+        [3] Yang, S., & Zhao, Y. F. (2018). Additive manufacturing-enabled part count reduction: a lifecycle perspective.
+            Journal of mechanical design, 140(3), 031702.
+        <a href="https://www.researchgate.net/profile/Sheng_Yang11/publication/322412027_Additive_Manufacturing-Enabled_Part_Count_Reduction_A_Lifecycle_Perspective/links/5b159fc70f7e9bda0ffdfabf/Additive-Manufacturing-Enabled-Part-Count-Reduction-A-Lifecycle-Perspective.pdf">Download</a><br>
+        [4] Yang, S., Santoro, F., Sulthan, M. A., & Zhao, Y. F. (2019). A numerical-based part consolidation candidate detection approach with modularization considerations.
+           Research in Engineering Design, 30(1), 63-83.
+        <a href="https://link.springer.com/article/10.1007/s00163-018-0298-3">Download</a><br>
+
+        </ol>
+
+    </p>
+
+    <div style="height: 30px"></div>
+
+    </div>
+
+    <div class="row" style="min-width: 500px; max-width: 1300px; margin:0 auto">
+        <p style="font-size: 24px"><b>Screenshots of Exemplified Pedal Redesign</b></p>
+     <div class="column">
+         <img style="width:100%" src="static/img/Figure 7-4.jpg" alt="Snow" >
+    </div>
+    <div class="column">
+         <img style="width:100%" src="static/img/Figure 7-5.jpg" alt="Snow" >
+    </div>
+
+    <div class="column">
+        <img style="width:100%" src="static/img/Figure 7-6.jpg" alt="Snow" >
+    </div>
+    <div class="column">
+        <img style="width:100%" src="static/img/Figure 7-7.jpg" alt="Snow" >
+     </div>
+    </div>
+<div style="min-width: 500px; max-width: 1300px; margin:0 auto; text-align: center">
+
+    <div style="height: 30px"></div>
+</div>
+
+
+
+<div w3-include-html="end.html"></div>
+<script>
+includeHTML();
+</script>
+
+</body>
+</html>
