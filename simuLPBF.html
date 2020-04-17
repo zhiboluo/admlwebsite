@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<script>
+function includeHTML() {
+  var z, i, elmnt, file, xhttp;
+  /*loop through a collection of all HTML elements:*/
+  z = document.getElementsByTagName("*");
+  for (i = 0; i < z.length; i++) {
+    elmnt = z[i];
+    /*search for elements with a certain atrribute:*/
+    file = elmnt.getAttribute("w3-include-html");
+    if (file) {
+      /*make an HTTP request using the attribute value as the file name:*/
+      xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4) {
+          if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+          if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+          /*remove the attribute, and call this function once more:*/
+          elmnt.removeAttribute("w3-include-html");
+          includeHTML();
+        }
+      }
+      xhttp.open("GET", file, true);
+      xhttp.send();
+      /*exit the function:*/
+      return;
+    }
+  }
+}
+</script>
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>SimuLPBF</title>
+    <style>
+        .button {
+         background-color: #4CAF50;
+           border: none;
+            color: white;
+          padding: 15px 25px;
+            text-align: center;
+           font-size: 16px;
+           cursor: pointer;}
+        .button:hover {
+             background-color: green; }
+      </style>
+</head>
+<body>
+
+<div w3-include-html="head.html"></div>
+<script>
+includeHTML();
+</script>
+
+
+<div style="min-width: 500px; max-width: 1300px; margin:0 auto">
+    <br>
+    <h1>Process modeling of laser powder bed fusion (LPBF) process</h1>
+    <h2 style="font-size: 28px">A Tool to Simulate Material Thermo-mechanical Behavior for LPBF process at Full Part-level </h2>
+
+</div>
+
+
+<div style="min-width: 500px; max-width: 1300px; margin:0 auto">
+    <br>
+    <div style="height: 30px"></div>
+    <div style ="float:right; margin: 50px 0px 20px 20px">
+        <iframe width="800" height="450"
+            src="https://www.youtube.com/embed/Dg5aY4OrEA0"
+            frameborder="0" allowfullscreen>
+        </iframe>
+    </div>
+
+    <p style="font-size: 24px"><b>How to use </b>:</p>
+    <p style="font-family: Arial ; font-size: 18px; text-align:justify; text-justify:inter-ideograph;">
+       After you installed the Deal.II library successfully in your Linux/Mac OS, follow the steps below to run a case study.
+    </p>
+
+    <ul style="list-style-type:disc; font-size:18px">
+        <li>Preprocessing</li>
+            - Preparation of coarse mesh <br>
+            - Preparation of material property file <br>
+            - Preparation of scanning path file <br>
+        <li>Processing </li>
+            - Open a terminal in your project folder and type “mpirun -n XX  ./thermal-stress-part level” (XX indicates the number of processors you want to use) <br>
+        <li>Postprocessing </li>
+            - Using VisIt or Paraview to visualize the output .pvtu files.
+    </ul>
+
+    <div style="height: 5px"></div>
+    <br />
+    <form action="static/SimuLPBF.zip">
+        <button class="button">Download</button>
+    </form>
+
+    <div style="height: 5px"></div>
+    <br>
+    <p style="font-size: 24px"><b>Project description</b></p>
+
+    <p style="font-family: Arial ; font-size: 18px;text-align:justify; text-justify:inter-ideograph;">
+        LPBF process tends to induce high residual stress in solidified regions. Defects induced by the residual stress,
+        such as cracks, warping and distortion, are main reasons for dimension errors and fabrication failures. The predominant reason
+        for these defects is the rapidly changing thermal gradient during thermal cycles in different regions and the stress accumulation
+        in deposited layers. To overcome this problem, a large number of experiments have been carried out through adjusting process parameters,
+        which is time consuming and costly. In addition, the aforementioned defects are mainly controlled by more than 100 process parameters.
+        Therefore, a numerical modeling and analysis of temperature and thermal stress fields during a fabrication process are needed to investigate
+        the relationship between process parameters and performances of the final part. The main process simulation includes
+        transient thermal and quasi-static mechanical material behavior. This simplification linearizes the coupled physical processes and can
+        significantly reduce the computational cost.<br>
+        <br>
+          <img width="1200" src="static/img/description.png" alt="Connector" class="center">
+        <br>
+    </p>
+
+    <div style="height: 5px"></div>
+    <p style="font-size: 24px"><b>Introduction of SimuLPBF</b></p>
+
+    <p style="font-family: Arial ; font-size: 18px;text-align:justify; text-justify:inter-ideograph;">
+        This FE model provides a simulation tool to exhaustively record temperature fields of each time step and temperature history of each
+        point for stress-strain analysis and distortion evolution. This simulation tool can also be used to optimize process parameters in a more practical way.
+        This tool is mainly written in C++.  <br>
+        <br>
+        This research has the following features to implement a simulation of LPBF process at part level:<br>
+    <ol style="type:1; font-size:18px;text-align:justify; text-justify:inter-ideograph;">
+        <li> <b>Simulation driven by scanning path file</b>: Develop a scanning path file which contains the necessary process parameters for each scanning track and each layer,
+            and use it to drive the simulation process track-by-track and layer-by-layer </li>
+        <li> <b>Material deposition strategy</b>: Develop a new material deposition model which can reduce the active cell number, mimic the powder spreading process,
+            and incorporate material phase transition in a cell <br>
+        <li><b>Efficient Adaptive mesh strategy</b>: Develop a new adaptive mesh strategy which can automatically refine and coarsen FE mesh based on current scanning
+            track and reduce the frequency for mesh change <br>
+        <li> <b>Temperature-dependent material property</b>: Develop a new temperature-dependent material property distribution strategy which designates the properties of solid,
+            liquid, and powder material at different temperatures <br>
+        <li> <b>Parallel computing scheme</b>: Utilize a parallel computing method that can segment the simulation domain into several subdomains and assign each subdomain
+            to a processor. All the subdomains can be processed simultaneously to reduce the computational time <br>
+        <li> <b>Incorporate Line heat source and hybrid heat source</b>: Develop a new heat source model which can increase the length of time step without losing much accuracy of the thermal solution <br>
+        <li> <b>Efficent thermo-mechanical simulation scheme</b>: Develop a transient nonlinear thermal model and weakly couple it with thermo-elasto-plastic mechanical model to predict
+            the material thermo-mechanical behaviors during the SLM process <br>
+        <br>
+    </ol>
+    </p>
+
+    <p style="...">
+        In summary, by using this simulation scheme, the temperature difference can be controlled within 5% compared with the static mesh strategy, while the overall simulation
+        efficiency can be improved by 12.6~18.6 times compared with the traditional static mesh strategy using a single processor, depending on the scale of the problem and number of CPU cores.<br>
+        <br>
+        The applications of this simulation model can be implemented in many fields.  In manufacturing, a full part-level simulation can be done by using this model to predict possible
+        design flaws before the real printing process. In designing, this simulation model can help to optimize the topology of the parts by evaluating thermal concentration regions which
+        may lead to distortions in the final parts. In academia , this simulation model can be used to optimize process parameters without conducting a real printing experiment and generate
+        a set of optimal printing parameters for following data-driven studies. In addition, the predicted temperature data can be used for further simulation of microstructure evolution at part level.
+    </p>
+
+    <p style="font-family: Arial ; font-size: 18px; text-align:justify; text-justify:inter-ideograph;">
+         All related work can be found in the following publications:<br>
+        [1] Zhibo Luo, and Yaoyao Zhao, 2019, "Efficient thermal finite element modeling of selective laser melting of Inconel 718," Computational Mechanics, pp. 1-25.<br>
+        [2] Zhibo Luo, and Yaoyao Zhao, 2019, "Numerical simulation of part-level temperature fields during selective laser melting of stainless steel 316L,"
+            The International Journal of Advanced Manufacturing Technology, pp. 1-21.<br>
+        [3] Zhibo Luo, and Yaoyao Zhao, 2017, "Numerical simulation of temperature fields in powder bed fusion process by using hybrid heat source model,"
+            28th Proc. Solid Freeform Fabrication Proceedings, Austin, TX.<br>
+
+    </p>
+
+    <div style="height: 30px"></div>
+
+</div>
+
+    <div class="row" style="min-width: 500px; max-width: 1300px; margin:0 auto">
+        <p style="font-size: 24px"><b>Screenshots of Some Case Studies</b></p>
+     <div class="column">
+         <img style="width:100%" src="static/img/temperature.png" alt="Snow" >
+    </div>
+    <div class="column">
+         <img style="width:100%" src="static/img/displacement.png" alt="Snow" >
+    </div>
+
+    <div class="column">
+        <img style="width:100%" src="static/img/vm stress.png" alt="Snow" >
+    </div>
+    <div class="column">
+        <img style="width:100%" src="static/img/stress xy.png" alt="Snow" >
+     </div>
+<!--    </div>-->
+
+<!--    <div class="row" style="...">-->
+<!--     <div class="column">-->
+<!--        <img style="width:100%" src="static/img/Figure 2.jpg" alt="Snow" >-->
+<!--     </div>-->
+<!--    <div class="column">-->
+<!--        <img style="width:100%" src="static/img/Figure 3.jpg" alt="Snow" >-->
+<!--    </div>-->
+<!--    <div class="column">-->
+<!--        <img style="width:100%" src="static/img/material deposition-element activation.jpg" alt="Snow" >-->
+<!--    </div>-->
+
+    </div>
+<div style="min-width: 500px; max-width: 1300px; margin:0 auto; text-align: center">
+
+    <div style="height: 30px"></div>
+</div>
+
+
+
+<div w3-include-html="end.html"></div>
+<script>
+includeHTML();
+</script>
+
+</body>
+</html>

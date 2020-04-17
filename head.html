@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zhibo Luo</title>
+</head>
+<body>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Zhibo Luo</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+
+
+<nav class="navbar navbar-inverse">
+    <div style="min-width: 500px; max-width: 1300px; margin:0 auto">
+
+        <!-- Header -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+<!--            <a class="navbar-brand" href="https://sy1990.github.io/Default/">Dr. Zhibo Luo</a>-->
+            <a class="navbar-brand" >Dr. Zhibo Luo</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="topNavBar">
+
+            <ul class="nav navbar-nav">
+                  <li class="{% block Home %}{% endblock %}">
+                    <a href="index.html">
+                        <span class="glyphicon glyphicon glyphicon-random" aria-hidden="true"></span>&nbsp; Home
+                    </a>
+                </li>
+
+                <li class="{% block ConsolidDesign %}{% endblock %}">
+                    <a href="simuLPBF.html">
+                        <span class="glyphicon glyphicon glyphicon-wrench" aria-hidden="true"></span>&nbsp; SimuLPBF
+                    </a>
+                </li>
+                <li class="{% block publication_active %}{% endblock %}">
+                    <a href="research.html" target="_blank">
+                        <span class="glyphicon glyphicon glyphicon-list" aria-hidden="true"></span>&nbsp; Research
+                    </a>
+                </li>
+                <li class="{% block publication_active %}{% endblock %}">
+                    <a href="https://scholar.google.ca/citations?user=CvbV-P8AAAAJ&hl=en" target="_blank">
+                        <span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp; Publications
+                    </a>
+                </li>
+<!--                <li class="{% block download_active %}{% endblock %}">-->
+<!--                    <a href="https://github.com/SY1990/RhinoPCCD" target="_blank">-->
+<!--                        <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>&nbsp; Download-->
+<!--                    </a>-->
+<!--                </li>-->
+
+                <li class="{% block contact_active %}{% endblock %}">
+                    <a href="contact.html" target="_blank">
+                        <span class="glyphicon glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp; Contact
+                    </a>
+                </li>
+            </ul>
+
+
+        </div>
+
+
+
+    </div>
+</nav>
+
+</body>
+</html>
